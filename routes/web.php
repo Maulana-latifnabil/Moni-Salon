@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +28,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
 
+Route::get('bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+Route::resource('bookings', BookingController::class);
+
+Route::resource('services', ServiceController::class);
+
+
+
+
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
+    Route::resource('users', UserController::class);
 });
 
 Route::get('admin', function () {

@@ -28,7 +28,10 @@ class RoleController extends Controller
         ]);
 
         $role = Role::create(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
+
+        // Retrieve permission names from the permissions array in the request
+        $permissionNames = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+        $role->syncPermissions($permissionNames);
 
         return redirect()->route('roles.index')->with('success', 'Role created successfully');
     }
@@ -41,20 +44,23 @@ class RoleController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $role = Role::findById($id);
+{
+    $role = Role::findById($id);
 
-        $request->validate([
-            'name' => 'required|unique:roles,name,' . $role->id,
-            'permissions' => 'required|array',
-        ]);
+    $request->validate([
+        'name' => 'required|unique:roles,name,' . $role->id,
+        'permissions' => 'required|array',
+    ]);
 
-        $role->name = $request->name;
-        $role->save();
-        $role->syncPermissions($request->permissions);
+    $role->name = $request->name;
+    $role->save();
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
-    }
+    // Retrieve permission names from the permissions array in the request
+    $permissionNames = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+    $role->syncPermissions($permissionNames);
+
+    return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+}
 
     public function destroy($id)
     {
