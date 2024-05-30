@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             <label for="service">Layanan yang Dipesan</label>
-            <select name="service[]" id="service" class="form-control" multiple>
+            <select name="service[]" id="service" class="form-control">
                 @foreach($services as $service)
                     <option value="{{ $service->id }}">{{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}</option>
                 @endforeach

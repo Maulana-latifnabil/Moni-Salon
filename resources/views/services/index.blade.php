@@ -34,7 +34,7 @@
                                 <td>{{ $service->id }}</td>
                                 <td>{{ $service->name }}</td>
                                 <td>{{ $service->description }}</td>
-                                <td>{{ $service->price }}</td>
+                                <td>Rp{{ number_format($service->price, 0, ',', '.') }}</td>
                                 <td>
                                     <a href="{{ route('services.edit', $service->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                     <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">

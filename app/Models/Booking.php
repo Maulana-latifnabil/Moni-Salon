@@ -10,16 +10,17 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'full_name', 'email', 'phone_number', 'address', 'booking_date', 'booking_time',
-        'service', 'selected_barber', 'additional_notes', 'payment_method'
-    ];
-
-    protected $casts = [
-        'service' => 'array',  // Add this line
+        'full_name', 'phone_number', 'address', 'booking_date', 'booking_time',
+        'service_id', 'barber_id', 'additional_notes', 'payment_method'
     ];
 
     public function barber()
     {
-        return $this->belongsTo(User::class, 'selected_barber');
+        return $this->belongsTo(User::class, 'barber_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }

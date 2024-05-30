@@ -11,13 +11,12 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('full_name');
-            $table->string('email');
             $table->string('phone_number');
             $table->string('address');
             $table->date('booking_date');
             $table->time('booking_time');
             $table->foreignId('service_id')->constrained();
-            $table->foreignId('barber_id')->constrained();
+            $table->foreignId('barber_id')->constrained('users')->onDelete('cascade');
             $table->text('additional_notes')->nullable();
             $table->string('payment_method');
             $table->timestamps();
