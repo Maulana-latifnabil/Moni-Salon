@@ -85,7 +85,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Booking & Services:</h6>
-                        <a class="collapse-item" href="/">Booking</a>
+                        <a class="collapse-item" href="{{ route('bookingAdmin.index') }}">Booking</a>
                         <a class="collapse-item" href="{{ route('services.index') }}">Services</a>
                     </div>
                 </div>

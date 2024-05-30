@@ -3,16 +3,12 @@
 @section('content')
 <div class="container">
     <h1>Edit Booking</h1>
-    <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
+    <form action="{{ route('bookingAdmin.update', $booking->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
             <label for="full_name">Nama Lengkap</label>
             <input type="text" name="full_name" id="full_name" class="form-control" value="{{ $booking->full_name }}" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control" value="{{ $booking->email }}" required>
         </div>
         <div class="form-group">
             <label for="phone_number">Nomor Telepon</label>
@@ -31,10 +27,10 @@
             <input type="time" name="booking_time" id="booking_time" class="form-control" value="{{ $booking->booking_time }}" required>
         </div>
         <div class="form-group">
-            <label for="service">Layanan yang Dipesan</label>
-            <select name="service[]" id="service" class="form-control" multiple>
+            <label for="service_id">Layanan yang Dipesan</label>
+            <select name="service_id" id="service_id" class="form-control">
                 @foreach($services as $service)
-                    <option value="{{ $service->id }}" {{ in_array($service->id, $booking->service) ? 'selected' : '' }}>{{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}</option>
+                <option value="{{ $service->id }}">{{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}</option>
                 @endforeach
             </select>
         </div>

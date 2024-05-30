@@ -36,7 +36,7 @@ Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->n
 
 Route::resource('services', ServiceController::class);
 
-Route::middleware(['auth', 'role:Customer|Admin'])->group(function () {
+Route::middleware(['auth', 'role:Customer'])->group(function () {
     Route::get('customer/bookings', [CustomerBookingController::class, 'index'])->name('customer.bookings.index');
     Route::get('customer/bookings/create', [CustomerBookingController::class, 'create'])->name('customer.bookings.create');
     Route::post('customer/bookings', [CustomerBookingController::class, 'store'])->name('customer.bookings.store');
@@ -45,6 +45,13 @@ Route::middleware(['auth', 'role:Customer|Admin'])->group(function () {
     Route::delete('customer/bookings/{id}', [CustomerBookingController::class, 'destroy'])->name('customer.bookings.destroy');
     Route::get('customer/bookings/{id}/receipt', [CustomerBookingController::class, 'showReceipt'])->name('customer.bookings.receipt');
     Route::get('downloadReceipt/{id}', [CustomerBookingController::class, 'downloadReceipt'])->name('downloadReceipt');
+});
+
+Route::middleware(['auth', 'role:Admin|Barber'])->group(function () {
+    Route::get('bookingAdmin', [CustomerBookingController::class, 'showBooking'])->name('bookingAdmin.index');
+    Route::get('bookingAdmin/{id}/edit', [CustomerBookingController::class, 'editBooking'])->name('bookingAdmin.edit');
+    Route::put('bookingAdmin/{id}', [CustomerBookingController::class, 'updateBooking'])->name('bookingAdmin.update');
+    Route::delete('bookingAdmin/{id}', [CustomerBookingController::class, 'destroyBooking'])->name('bookingAdmin.destroy');
 });
 
 
