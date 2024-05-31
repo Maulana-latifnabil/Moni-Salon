@@ -82,7 +82,7 @@ class CustomerBookingController extends Controller
                 'phone_number' => 'required|string|max:15',
                 'address' => 'nullable|string|max:255',
                 'booking_date' => 'required|date',
-                'booking_time' => 'required|date_format:H:i',
+                // 'booking_time' => 'required|date_format:H:i',
                 'service_id' => 'required',
                 'selected_barber' => 'nullable|exists:users,id',
                 'additional_notes' => 'nullable|string',
@@ -110,7 +110,7 @@ class CustomerBookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
-        if ($booking->name !== Auth::user()->name) {
+        if ($booking->full_name !== Auth::user()->name) {
             return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk menghapus booking ini.');
         }
 

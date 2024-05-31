@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label for="booking_date">Tanggal Booking</label>
-            <input type="date" name="booking_date" id="booking_date" class="form-control" value="{{ $booking->booking_date }}" required>
+            <input type="date" name="booking_date" id="booking_date" class="form-control" value="{{ $booking->booking_date }}" min="{{ date('Y-m-d') }}" required>
         </div>
         <div class="form-group">
             <label for="booking_time">Waktu Booking</label>

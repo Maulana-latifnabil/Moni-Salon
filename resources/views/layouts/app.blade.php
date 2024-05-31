@@ -43,6 +43,7 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
+            @can('manage users')
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -62,14 +63,19 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">User Management :</h6>
                         <a class="collapse-item" href="{{ route('users.index') }}">User</a>
+                        @can('manage roles')
                         <a class="collapse-item" href="{{ route('roles.index') }}">Roles</a>
+                        @endcan
+                        @can('manage permissions')
                         <a class="collapse-item" href="{{ route('permissions.index') }}">Permissions</a>
+                        @endcan
                     </div>
                 </div>
             </li>
-
+            @endcan
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            @can('manage bookings')
 
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -90,10 +96,10 @@
                     </div>
                 </div>
             </li>
-
+            @endcan
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
+            @can('view own bookings')
             <!-- Customer Booking -->
             <div class="sidebar-heading">
                 Customer Booking
@@ -111,7 +117,7 @@
                     </div>
                 </div>
             </li>
-
+            @endcan
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -146,9 +152,9 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('customer.bookings.index') }}">Booking Saya</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

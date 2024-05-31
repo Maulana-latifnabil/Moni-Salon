@@ -31,7 +31,7 @@
                     <tbody>
                         @foreach($services as $service)
                             <tr>
-                                <td>{{ $service->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $service->name }}</td>
                                 <td>{{ $service->description }}</td>
                                 <td>Rp{{ number_format($service->price, 0, ',', '.') }}</td>

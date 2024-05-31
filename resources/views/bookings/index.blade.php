@@ -46,8 +46,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                <a href="{{ route('customer.bookings.receipt', $booking->id) }}"
-                                    class="btn btn-info btn-sm">Kwitansi</a>
+                                {{-- <a href="{{ route('customer.bookings.receipt', $booking->id) }}"
+                                    class="btn btn-info btn-sm">Kwitansi</a> --}}
                             </form>
                         </td>
                     </tr>
