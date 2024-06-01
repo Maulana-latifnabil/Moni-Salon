@@ -3,17 +3,52 @@
 <head>
     <title>Kwitansi Booking</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 100%; max-width: 800px; margin: auto; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .content { padding: 20px; border: 1px solid #000; }
-        .content p { margin: 5px 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #343a40;
+        }
+        .content {
+            padding: 20px;
+            border-top: 2px solid #343a40;
+        }
+        .content p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #495057;
+        }
+        .content p strong {
+            display: inline-block;
+            width: 150px;
+            color: #212529;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h2>Bukti Booking</h2>
+            <img src="template/img/bglogin.jpg" alt="backround" height="140px">
+            <h1>Bukti Booking</h1>
         </div>
         <div class="content">
             <p><strong>Nama Lengkap:</strong> {{ $booking->full_name }}</p>

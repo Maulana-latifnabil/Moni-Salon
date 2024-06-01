@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Manage Permissions</h1>
     <a href="{{ route('permissions.create') }}" class="btn btn-primary">Create Permission</a>
-    <table class="table mt-4">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>Name</th>

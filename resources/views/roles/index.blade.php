@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Manage Roles</h1>
     <a href="{{ route('roles.create') }}" class="btn btn-primary">Create Role</a>
-    <table class="table mt-4">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>Name</th>

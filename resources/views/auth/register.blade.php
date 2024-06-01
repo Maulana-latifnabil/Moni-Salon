@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body style="background-image: linear-gradient(180deg, #4e73df 10%, #ff0000 100%);">
 
     <div class="container">
 
@@ -36,7 +36,7 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Buat akun anda !</h1>
                             </div>
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
@@ -83,11 +83,11 @@
                                 <hr>
                             </form>
                             <hr>
-                            <div class="text-center">
+                            {{-- <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
+                            </div> --}}
                             <div class="text-center">
-                                <a class="small" href="{{ route('login') }}">Already have an account? Login!</a>
+                                <a class="small" href="{{ route('login') }}">Sudah memiliki akun? Login!</a>
                             </div>
                         </div>
                     </div>

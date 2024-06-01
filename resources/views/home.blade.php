@@ -1,57 +1,3 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        </div>
-
-        <!-- Content Row -->
-        <div class="row">
-
-            <!-- Earnings (Monthly) Card Example -->
-
-        </div>
-
-        <!-- Content Row -->
-
-        <div class="row">
-            <!-- Katalog Layanan -->
-            <div class="col-lg-12">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Katalog Layanan</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            @foreach ($services as $service)
-                                <div class="col-md-4 mb-4">
-                                    <div class="card h-100">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $service->name }}</h5>
-                                            <p class="card-text">{{ $service->description }}</p>
-                                            <p class="card-text"><strong>Harga:</strong> {{ formatRupiah($service->price) }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tombol Booking -->
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <a href="{{ route('customer.bookings.create') }}" class="btn btn-success btn-lg">Booking Sekarang</a>
-            </div>
-        </div>
-
-    </div>
-@endsection --}}
 
 @extends('layouts.app')
 
@@ -114,7 +60,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -153,9 +99,13 @@
             </div>
         @endcan
         @can('katalog barber')
-        <div class="card-body">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Booking Hari ini</h6>
+            </div>
+            <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -187,6 +137,16 @@
                 </table>
             </div>
         </div>
+        </div>
         @endcan
     </div>
 @endsection
+    <!-- DataTables CSS and JS -->
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#bookingsTableAdmin').DataTable();
+            $('#bookingsTableBarber').DataTable();
+        });
+    </script>
