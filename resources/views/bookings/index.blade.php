@@ -34,13 +34,16 @@
                         <td>{{ $booking->address }}</td>
                         <td>{{ $booking->booking_date }}</td>
                         <td>{{ $booking->booking_time }}</td>
-                        <td>{{ $booking->service->name }}</td>
+                        <td>
+                            @foreach ($booking->services as $service)
+                                {{ $service->name }}<br>
+                            @endforeach
+                        </td>
                         <td>{{ $booking->barber ? $booking->barber->name : 'N/A' }}</td>
                         <td>{{ $booking->additional_notes }}</td>
                         <td>{{ $booking->payment_method }}</td>
                         <td>
-                            <a href="{{ route('bookingAdmin.edit', $booking->id) }}"
-                                class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('bookingAdmin.edit', $booking->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{ route('bookingAdmin.destroy', $booking->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf

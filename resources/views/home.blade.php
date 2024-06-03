@@ -63,7 +63,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>No</th>
                                             <th>Nama Lengkap</th>
                                             <th>Nomor Telepon</th>
                                             <th>Alamat</th>
@@ -78,13 +78,17 @@
                                     <tbody>
                                         @foreach ($bookingsToday as $booking)
                                             <tr>
-                                                <td>{{ $booking->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $booking->full_name }}</td>
                                                 <td>{{ $booking->phone_number }}</td>
                                                 <td>{{ $booking->address }}</td>
                                                 <td>{{ $booking->booking_date }}</td>
                                                 <td>{{ $booking->booking_time }}</td>
-                                                <td>{{ $booking->service->name }}</td>
+                                                <td>
+                                                    @foreach ($booking->services as $service)
+                                                        {{ $service->name }}<br>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ $booking->barber ? $booking->barber->name : 'N/A' }}</td>
                                                 <td>{{ $booking->additional_notes }}</td>
                                                 <td>{{ ucfirst($booking->payment_method) }}</td>
@@ -128,7 +132,11 @@
                                 <td>{{ $booking->address }}</td>
                                 <td>{{ $booking->booking_date }}</td>
                                 <td>{{ $booking->booking_time }}</td>
-                                <td>{{ $booking->service->name }}</td>
+                                <td>
+                                    @foreach ($booking->services as $service)
+                                        {{ $service->name }}<br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $booking->additional_notes }}</td>
                                 <td>{{ ucfirst($booking->payment_method) }}</td>
                             </tr>

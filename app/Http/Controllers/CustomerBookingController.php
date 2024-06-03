@@ -12,13 +12,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class CustomerBookingController extends Controller
 {
     public function index()
-    {
-        $bookings = Booking::with('service', 'barber')
-            ->where('full_name', Auth::user()->name)
-            ->get();
+{
+    $bookings = Booking::with('services', 'barber')
+        ->where('full_name', Auth::user()->name)
+        ->get();
 
-        return view('customer.bookings.index', compact('bookings'));
-    }
+    return view('customer.bookings.index', compact('bookings'));
+}
 
     public function create()
     {
@@ -28,33 +28,36 @@ class CustomerBookingController extends Controller
     }
 
     public function store(Request $request)
-    {
-        try {
-            $request->validate([
-                'full_name' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:15',
-                'address' => 'nullable|string|max:255',
-                'booking_date' => 'required|date',
-                'booking_time' => 'required|date_format:H:i',
-                'service_id' => 'required|exists:services,id',
-                'barber_id' => 'required|exists:users,id',
-                'additional_notes' => 'nullable|string',
-                'payment_method' => 'required|string|in:cash,credit_card,online_payment',
-                'agree_privacy_policy' => 'required|accepted',
-                'agree_terms_conditions' => 'required|accepted',
-            ]);
+{
+    try {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'booking_date' => 'required|date',
+            'booking_time' => 'required|date_format:H:i',
+            'service_ids' => 'required|array',
+            'service_ids.*' => 'exists:services,id',
+            'barber_id' => 'required|exists:users,id',
+            'additional_notes' => 'nullable|string',
+            'payment_method' => 'required|string|in:cash,credit_card,online_payment',
+            'agree_privacy_policy' => 'required|accepted',
+            'agree_terms_conditions' => 'required|accepted',
+        ]);
 
-            $data = $request->all();
-            $data['full_name'] = Auth::user()->name;
+        $data = $request->all();
+        $data['full_name'] = Auth::user()->name;
 
-            $booking = Booking::create($data);
+        $booking = Booking::create($data);
+        $booking->services()->sync($request->service_ids);
 
-            return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
-        } catch (\Throwable $th) {
-            dd($th);
-            return redirect()->route('customer.bookings.create')->with('error', 'Booking gagal dibuat.');
-        }
+        return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
+    } catch (\Throwable $th) {
+        dd($th);
+        return redirect()->route('customer.bookings.create')->with('error', 'Booking gagal dibuat.');
     }
+}
+
 
     public function edit($id)
     {
@@ -79,14 +82,15 @@ class CustomerBookingController extends Controller
         try {
             $request->validate([
                 'full_name' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:15',
-                'address' => 'nullable|string|max:255',
-                'booking_date' => 'required|date',
-                // 'booking_time' => 'required|date_format:H:i',
-                'service_id' => 'required',
-                'selected_barber' => 'nullable|exists:users,id',
-                'additional_notes' => 'nullable|string',
-                'payment_method' => 'required|string|in:cash,credit_card,online_payment',
+            'phone_number' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'booking_date' => 'required|date',
+            // 'booking_time' => 'required|date_format:H:i',
+            'service_ids' => 'required|array',
+            'service_ids.*' => 'exists:services,id',
+            'barber_id' => 'nullable|exists:users,id',
+            'additional_notes' => 'nullable|string',
+            'payment_method' => 'required|string|in:cash,credit_card,online_payment',
             ]);
             $data = $request->all();
 
@@ -137,7 +141,8 @@ class CustomerBookingController extends Controller
 
     public function showBooking()
     {
-        $bookings = Booking::with('service', 'barber')
+
+        $bookings = Booking::with('services', 'barber')
             ->get();
 
         return view('bookings.index', compact('bookings'));

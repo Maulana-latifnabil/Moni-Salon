@@ -15,8 +15,8 @@ class Service extends Model
         'price',
     ];
 
-    public function booking()
+    public function bookings()
     {
-        return $this->belongsTo(Booking::class);
+        return $this->belongsToMany(Booking::class, 'booking_service');
     }
 }

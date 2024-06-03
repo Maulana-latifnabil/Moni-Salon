@@ -1,0 +1,11 @@
+PR :
+1. Booking secara bersamaan lebih dari 1, menambahkan jam yang tersedia
+2. Dashboard manajemen booking untuk admin dan barber, report penghasilan perbulan
+3. Diskon harga barber untuk pelanggan loyal dan rating untuk barber
+4. Buat website sederhana untuk pembayaran menggunakan API
+5. Menambahkan filter untuk hari/tanggal dan modal konfirmasi hapus
+6. Menambahkan status booking 
+7. Menambahkan Estimasi waktu layanan
+8. Konfirmasi Check-in customer untuk kedatangan
+9. Migrasi ke bahasa/teknologi yang lain
+10. Menambah jam operasional untuk booking

@@ -27,10 +27,13 @@
             <input type="time" name="booking_time" id="booking_time" class="form-control" value="{{ $booking->booking_time }}" required>
         </div>
         <div class="form-group">
-            <label for="service_id">Layanan yang Dipesan</label>
-            <select name="service_id" id="service_id" class="form-control">
-                @foreach($services as $service)
-                <option value="{{ $service->id }}">{{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}</option>
+            <label for="service_ids">Layanan yang Dipesan</label>
+            <select name="service_ids[]" id="service_ids" class="form-control" multiple>
+                <option value="">Pilih Layanan</option>
+                @foreach ($services as $service)
+                    <option value="{{ $service->id }}" {{ collect(old('service_ids'))->contains($service->id) ? 'selected' : '' }}>
+                        {{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}
+                    </option>
                 @endforeach
             </select>
         </div>
