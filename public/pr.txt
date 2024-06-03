@@ -1,5 +1,5 @@
 PR :
-1. Booking secara bersamaan lebih dari 1, menambahkan jam yang tersedia
+1. Booking secara bersamaan lebih dari 1 (Done), menambahkan jam yang tersedia (code sudah di edit, tapi belum fix, slot waktu tidak gelap)
 2. Dashboard manajemen booking untuk admin dan barber, report penghasilan perbulan
 3. Diskon harga barber untuk pelanggan loyal dan rating untuk barber
 4. Buat website sederhana untuk pembayaran menggunakan API

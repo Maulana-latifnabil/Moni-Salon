@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:Customer'])->group(function () {
     Route::delete('customer/bookings/{id}', [CustomerBookingController::class, 'destroy'])->name('customer.bookings.destroy');
     Route::get('customer/bookings/{id}/receipt', [CustomerBookingController::class, 'showReceipt'])->name('customer.bookings.receipt');
     Route::get('downloadReceipt/{id}', [CustomerBookingController::class, 'downloadReceipt'])->name('downloadReceipt');
+    Route::get('customer/bookings/unavailable-slots', [CustomerBookingController::class, 'getUnavailableSlots']);
 });
 
 Route::middleware(['auth', 'role:Admin|Barber'])->group(function () {

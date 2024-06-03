@@ -23,4 +23,20 @@ class Booking extends Model
     {
         return $this->belongsToMany(Service::class, 'booking_service');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $overlapBooking = Booking::where('barber_id', $model->barber_id)
+                ->where('booking_date', $model->booking_date)
+                ->where('booking_time', $model->booking_time)
+                ->exists();
+
+            if ($overlapBooking) {
+                throw new \Exception('Waktu ini sudah terpilih untuk barber yang anda pilih');
+            }
+        });
+    }
 }
