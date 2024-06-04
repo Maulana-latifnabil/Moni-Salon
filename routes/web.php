@@ -48,6 +48,20 @@ Route::middleware(['auth', 'role:Customer'])->group(function () {
     Route::get('customer/bookings/unavailable-slots', [CustomerBookingController::class, 'getUnavailableSlots']);
 });
 
+// route alur baru
+Route::get('customer/booking/step1', [CustomerBookingController::class, 'step1'])->name('customer.booking.step1');
+Route::post('customer/booking/step1', [CustomerBookingController::class, 'postStep1'])->name('customer.booking.step1.post');
+
+Route::get('customer/booking/step2', [CustomerBookingController::class, 'step2'])->name('customer.booking.step2');
+Route::post('customer/booking/step2', [CustomerBookingController::class, 'postStep2'])->name('customer.booking.step2.post');
+
+Route::get('customer/booking/step3', [CustomerBookingController::class, 'step3'])->name('customer.booking.step3');
+Route::post('customer/booking/step3', [CustomerBookingController::class, 'postStep3'])->name('customer.booking.step3.post');
+
+Route::get('customer/booking/confirm', [CustomerBookingController::class, 'confirm'])->name('customer.booking.confirm');
+Route::post('customer/booking/confirm', [CustomerBookingController::class, 'store'])->name('customer.booking.store');
+
+
 Route::middleware(['auth', 'role:Admin|Barber'])->group(function () {
     Route::get('bookingAdmin', [CustomerBookingController::class, 'showBooking'])->name('bookingAdmin.index');
     Route::get('bookingAdmin/{id}/edit', [CustomerBookingController::class, 'editBooking'])->name('bookingAdmin.edit');

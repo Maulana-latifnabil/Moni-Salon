@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a href="{{ route('customer.bookings.create') }}" class="btn btn-success btn-lg">Booking Sekarang</a>
+                    <a href="{{ route('customer.booking.step1') }}" class="btn btn-success btn-lg">Booking Sekarang</a>
                 </div>
             </div>
         @endcan
