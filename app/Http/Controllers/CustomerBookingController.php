@@ -21,138 +21,42 @@ class CustomerBookingController extends Controller
         return view('customer.bookings.index', compact('bookings'));
     }
 
-    // public function create()
-    // {
-    //     $availableSlots = [
-    //         '09:00', '10:00', '11:00', '12:00',
-    //         '13:00', '14:00', '15:00', '16:00',
-    //         '17:00', '18:00', '19:00'
-    //     ];
+    public function edit($id)
+    {
+        $booking = Booking::findOrFail($id);
 
-    //     $bookings = Booking::where('booking_date', request('booking_date'))
-    //         ->where('barber_id', request('barber_id'))
-    //         ->get(['booking_time']);
+        if ($booking->full_name !== Auth::user()->name) {
+            return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengedit booking ini.');
+        }
 
-    //     $services = Service::all();
-    //     $barbers = User::role('Barber')->get();
-    //     $selectedBookingTimes = session()->get('selected_booking_times', []);
+        $barbers = User::role('barber')->get();
+        $services = Service::all();
+        return view('customer.bookings.edit', compact('booking', 'barbers', 'services'));
+    }
 
-    //     return view('customer.bookings.create', compact('selectedBookingTimes', 'availableSlots', 'bookings', 'services', 'barbers'));
-    // }
+    public function update(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         $request->validate([
-    //             'full_name' => 'required|string|max:255',
-    //             'phone_number' => 'required|string|max:15',
-    //             'address' => 'nullable|string|max:255',
-    //             'booking_date' => 'required|date',
-    //             'booking_time' => 'required|date_format:H:i',
-    //             'service_ids' => 'required|array',
-    //             'service_ids.*' => 'exists:services,id',
-    //             'barber_id' => 'required|exists:users,id',
-    //             'additional_notes' => 'nullable|string',
-    //             'payment_method' => 'required|string|in:cash,credit_card,online_payment',
-    //             'agree_privacy_policy' => 'required|accepted',
-    //             'agree_terms_conditions' => 'required|accepted',
-    //         ]);
+        if ($booking->full_name !== Auth::user()->name) {
+            return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengupdate booking ini.');
+        }
 
-    //         $data = $request->all();
-    //         $data['full_name'] = Auth::user()->name;
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'service_ids.*' => 'exists:services,id',
+            'barber_id' => 'nullable|exists:users,id',
+            'additional_notes' => 'nullable|string',
+            'payment_method' => 'required|string|in:cash,credit_card,online_payment',
+        ]);
 
-    //         $booking = Booking::create($data);
-    //         $booking->services()->sync($request->service_ids);
+        $data = $request->all();
+        $booking->update($data);
 
-    //         return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
-    //     } catch (\Throwable $th) {
-    //         dd($th);
-    //         return redirect()->route('customer.bookings.create')->with('error', 'Booking gagal dibuat.');
-    //     }
-    // }
-
-    // public function getUnavailableSlots(Request $request)
-    // {
-    //     $date = $request->input('date');
-    //     $barberId = $request->input('barber_id');
-
-    //     // Validasi input
-    //     if (!$date || !$barberId) {
-    //         return response()->json([], 400); // Bad Request jika input tidak valid
-    //     }
-
-    //     // Ambil booking yang sudah ada berdasarkan tanggal dan barber
-    //     $bookings = Booking::where('booking_date', $date)
-    //         ->where('barber_id', $barberId)
-    //         ->pluck('booking_time'); // Ambil hanya kolom booking_time
-
-    //     return response()->json($bookings);
-    // }
-
-    // private function getAvailableTimeSlots()
-    // {
-    //     $startTime = Carbon::createFromTime(10, 0); // 10:00 AM
-    //     $endTime = Carbon::createFromTime(21, 0); // 9:00 PM
-    //     $slots = [];
-
-    //     while ($startTime < $endTime) {
-    //         $slots[] = $startTime->format('H:i');
-    //         $startTime->addHour();
-    //     }
-
-    //     return $slots;
-    // }
-
-    // public function edit($id)
-    // {
-    //     $booking = Booking::findOrFail($id);
-
-    //     if ($booking->full_name !== Auth::user()->name) {
-    //         return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengedit booking ini.');
-    //     }
-
-    //     $barbers = User::role('barber')->get();
-    //     $services = Service::all();
-    //     return view('customer.bookings.edit', compact('booking', 'barbers', 'services'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $booking = Booking::findOrFail($id);
-
-    //     if ($booking->full_name !== Auth::user()->name) {
-    //         return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengupdate booking ini.');
-    //     }
-    //     try {
-    //         $request->validate([
-    //             'full_name' => 'required|string|max:255',
-    //             'phone_number' => 'required|string|max:15',
-    //             'address' => 'nullable|string|max:255',
-    //             'booking_date' => 'required|date',
-    //             // 'booking_time' => 'required|date_format:H:i',
-    //             'service_ids' => 'required|array',
-    //             'service_ids.*' => 'exists:services,id',
-    //             'barber_id' => 'nullable|exists:users,id',
-    //             'additional_notes' => 'nullable|string',
-    //             'payment_method' => 'required|string|in:cash,credit_card,online_payment',
-    //         ]);
-    //         $data = $request->all();
-
-    //         $booking->update($data);
-
-    //         return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil diperbarui.');
-    //     } catch (\Throwable $th) {
-    //         dd($th);
-    //         return redirect()->route('customer.bookings.update')->with('error', 'Booking gagal dibuat.');
-    //     }
-
-
-    //     $data = $request->all();
-
-    //     $booking->update($data);
-
-    //     return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil diperbarui.');
-    // }
+        return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil diperbarui.');
+    }
 
     public function destroy($id)
     {
@@ -166,93 +70,31 @@ class CustomerBookingController extends Controller
         return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dihapus.');
     }
 
-    // public function showReceipt($id)
-    // {
-    //     $booking = Booking::findOrFail($id);
+    public function showReceipt($id)
+    {
+        $booking = Booking::findOrFail($id);
+        return view('customer.bookings.receipt', compact('booking'));
+    }
 
+    public function downloadReceipt($id)
+    {
+        $booking = Booking::find($id);
+        $pdf = Pdf::loadView('nota/kwitansi', compact('booking'));
+        return $pdf->stream('kwitansi_booking.pdf');
+    }
 
-    //     return view('customer.bookings.receipt', compact('booking'));
-    // }
+    public function showBooking()
+    {
+        $bookings = Booking::with('services', 'barber')->get();
+        return view('bookings.index', compact('bookings'));
+    }
 
-    // public function downloadReceipt($id)
-    // {
-    //     $booking = Booking::find($id);
-
-    //     $pdf = Pdf::loadView('nota/kwitansi', compact('booking'));
-
-    //     return $pdf->stream('kwitansi_booking.pdf');
-    // }
-
-    // public function showBooking()
-    // {
-
-    //     $bookings = Booking::with('services', 'barber')
-    //         ->get();
-
-    //     return view('bookings.index', compact('bookings'));
-    // }
-    // public function editBooking($id)
-    // {
-    //     $booking = Booking::findOrFail($id);
-
-    //     // if ($booking->full_name !== Auth::user()->name) {
-    //     // return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengedit booking ini.');
-    //     // }
-
-    //     $barbers = User::role('barber')->get();
-    //     $services = Service::all();
-    //     return view('bookings.edit', compact('booking', 'barbers', 'services'));
-    // }
-
-    // public function updateBooking(Request $request, $id)
-    // {
-    //     $booking = Booking::findOrFail($id);
-
-    //     // if ($booking->full_name !== Auth::user()->name) {
-    //     //     return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk mengupdate booking ini.');
-    //     // }
-    //     try {
-    //         $request->validate([
-    //             'full_name' => 'required|string|max:255',
-    //             'phone_number' => 'required|string|max:15',
-    //             'address' => 'nullable|string|max:255',
-    //             'booking_date' => 'required|date',
-    //             // 'booking_time' => 'required|date_format:H:i',
-    //             'service_id' => 'required',
-    //             'selected_barber' => 'nullable|exists:users,id',
-    //             'additional_notes' => 'nullable|string',
-    //             'payment_method' => 'required|string|in:cash,credit_card,online_payment',
-    //         ]);
-    //         $data = $request->all();
-
-    //         $booking->update($data);
-
-    //         return redirect()->route('bookingAdmin.index')->with('success', 'Booking berhasil diperbarui.');
-    //     } catch (\Throwable $th) {
-    //         dd($th);
-    //         return redirect()->route('bookingAdmin.index')->with('error', 'Booking gagal dibuat.');
-    //     }
-
-
-    //     $data = $request->all();
-
-    //     $booking->update($data);
-
-    //     return redirect()->route('bookingAdmin.index')->with('success', 'Booking berhasil diperbarui.');
-    // }
-
-    // public function destroyBooking($id)
-    // {
-    //     $booking = Booking::findOrFail($id);
-
-    //     // if ($booking->name !== Auth::user()->name) {
-    //     //     return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak memiliki izin untuk menghapus booking ini.');
-    //     // }
-
-    //     $booking->delete();
-    //     return redirect()->route('bookingAdmin.index')->with('success', 'Booking berhasil dihapus.');
-    // }
-
+    public function destroyBooking($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+        return redirect()->route('bookingAdmin.index')->with('success', 'Booking berhasil dihapus.');
+    }
 
     public function step1()
     {
@@ -322,7 +164,6 @@ class CustomerBookingController extends Controller
             return redirect()->back()->with('booking_error', 'The selected time is already booked. Please choose a different time.');
         }
 
-        // Save booking details in the session for confirmation step
         session([
             'booking_date' => $request->booking_date,
             'booking_time' => $request->booking_time
@@ -339,7 +180,9 @@ class CustomerBookingController extends Controller
         $bookingDate = session('booking_date');
         $bookingTime = session('booking_time');
 
-        return view('customer.bookings.confirm', compact('services', 'barber', 'bookingDate', 'bookingTime'));
+        $totalPrice = $services->sum('price');
+
+        return view('customer.bookings.confirm', compact('services', 'barber', 'bookingDate', 'bookingTime', 'totalPrice'));
     }
 
     public function store(Request $request)
@@ -360,6 +203,10 @@ class CustomerBookingController extends Controller
         $data['barber_id'] = session('barber_id');
         $data['booking_date'] = session('booking_date');
         $data['booking_time'] = session('booking_time');
+
+        $services = Service::whereIn('id', $data['service_ids'])->get();
+        $totalPrice = $services->sum('price');
+        $data['total_price'] = $totalPrice;
 
         $booking = Booking::create($data);
         $booking->services()->sync($data['service_ids']);

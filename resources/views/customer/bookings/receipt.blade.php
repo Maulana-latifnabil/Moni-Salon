@@ -16,9 +16,12 @@
                         <p><strong>Waktu Booking:</strong> {{ $booking->booking_time }}</p>
                         <p><strong>Layanan yang Dipesan:</strong>
                             @foreach ($booking->services as $service)
-                            {{ $service->name }}<br>
-                        @endforeach
+                            <li>
+                                {{ $service->name }}<br>
+                            </li>
+                            @endforeach
                         </p>
+                        <p><strong>Total Biaya Layanan</strong> Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</p>
                         <p><strong>Barber yang Dipilih:</strong> {{ $booking->barber ? $booking->barber->name : 'N/A' }}</p>
                         <p><strong>Catatan Tambahan:</strong> {{ $booking->additional_notes }}</p>
                         <p><strong>Metode Pembayaran:</strong> {{ ucfirst($booking->payment_method) }}</p>

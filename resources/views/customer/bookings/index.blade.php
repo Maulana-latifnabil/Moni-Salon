@@ -21,6 +21,7 @@
                             <th>Tanggal Booking</th>
                             <th>Waktu Booking</th>
                             <th>Layanan</th>
+                            <th>Total Harga</th>
                             <th>Barber</th>
                             <th>Catatan Tambahan</th>
                             <th>Metode Pembayaran</th>
@@ -41,6 +42,7 @@
                                         {{ $service->name }}<br>
                                     @endforeach
                                 </td>
+                                <td>Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</td>
                                 <td>{{ $booking->barber ? $booking->barber->name : 'N/A' }}</td>
                                 <td>{{ $booking->additional_notes }}</td>
                                 <td>{{ $booking->payment_method }}</td>
