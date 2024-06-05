@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\Booking;
+use App\Charts\MonthlyUsersChart;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -25,7 +26,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(MonthlyUsersChart $monthlyUsersChart)
     {
         $today = Carbon::today();
         $services = Service::all(); // Mengambil semua layanan
@@ -53,7 +54,10 @@ class HomeController extends Controller
                 return view('home', compact('services'));
             }
 
-            return view('home', compact('services', 'bookingsToday'));
+            // Buat chart
+            $chart = $monthlyUsersChart->build();
+
+            return view('home', compact('services', 'bookingsToday', 'chart'));
         } else {
             // Jika user tidak login
             return redirect()->route('login');

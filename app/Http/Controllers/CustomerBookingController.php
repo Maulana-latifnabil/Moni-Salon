@@ -12,14 +12,22 @@ use Carbon\Carbon;
 
 class CustomerBookingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::with('services', 'barber')
-            ->where('full_name', Auth::user()->name)
-            ->get();
+        $query = Booking::with('services', 'barber')
+            ->where('full_name', Auth::user()->name);
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('booking_date', [$startDate, $endDate]);
+        }
+
+        $bookings = $query->get();
 
         return view('customer.bookings.index', compact('bookings'));
     }
+
 
     public function edit($id)
     {
@@ -88,6 +96,7 @@ class CustomerBookingController extends Controller
         $bookings = Booking::with('services', 'barber')->get();
         return view('bookings.index', compact('bookings'));
     }
+
 
     public function destroyBooking($id)
     {

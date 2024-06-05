@@ -42,9 +42,9 @@
                                         {{ $service->name }}<br>
                                     @endforeach
                                 </td>
-                                <td>Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</td>
                                 <td>{{ $booking->barber ? $booking->barber->name : 'N/A' }}</td>
                                 <td>{{ $booking->additional_notes }}</td>
+                                <td>Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</td>
                                 <td>{{ $booking->payment_method }}</td>
                                 <td>
                                     <a href="{{ route('customer.bookings.edit', $booking->id) }}"

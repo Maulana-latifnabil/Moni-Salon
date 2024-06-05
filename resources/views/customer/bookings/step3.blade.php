@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Tentukan Jadwal</h1>
-    <form action="{{ route('customer.booking.step3.post') }}" method="POST">
+    <form id="bookingForm" action="{{ route('customer.booking.step3.post') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="booking_date">Tanggal Booking</label>
@@ -26,35 +26,23 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Selanjutnya</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary">Selanjutnya</button>
     </form>
 </div>
 
-@if(session('booking_error'))
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="bookingErrorModal" tabindex="-1" role="dialog" aria-labelledby="bookingErrorModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="bookingErrorModalLabel">Booking Error</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Pilih waktu yang lain
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-    $(document).ready(function() {
-        $('#bookingErrorModal').modal('show');
-    });
+document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    let bookingTime = document.getElementById('booking_time');
+    let selectedOption = bookingTime.options[bookingTime.selectedIndex];
+
+    if (selectedOption.disabled) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Slot waktu yang dipilih sudah terbooking. Silakan pilih waktu lain.',
+        });
+    }
+});
 </script>
-@endif
 @endsection
