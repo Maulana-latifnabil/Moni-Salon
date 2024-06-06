@@ -14,16 +14,16 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama Lengkap</th>
                             <th>Nomor Telepon</th>
                             <th>Alamat</th>
                             <th>Tanggal Booking</th>
                             <th>Waktu Booking</th>
                             <th>Layanan</th>
-                            <th>Total Harga</th>
                             <th>Barber</th>
                             <th>Catatan Tambahan</th>
+                            <th>Total Harga</th>
                             <th>Metode Pembayaran</th>
                             <th>Aksi</th>
                         </tr>
@@ -31,7 +31,7 @@
                     <tbody>
                         @foreach ($bookings as $booking)
                             <tr>
-                                <td>{{ $booking->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->full_name }}</td>
                                 <td>{{ $booking->phone_number }}</td>
                                 <td>{{ $booking->address }}</td>

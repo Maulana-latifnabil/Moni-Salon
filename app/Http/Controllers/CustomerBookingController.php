@@ -189,9 +189,20 @@ class CustomerBookingController extends Controller
         $bookingDate = session('booking_date');
         $bookingTime = session('booking_time');
 
+        // Calculate total price
         $totalPrice = $services->sum('price');
 
-        return view('customer.bookings.confirm', compact('services', 'barber', 'bookingDate', 'bookingTime', 'totalPrice'));
+        // Calculate discount
+        $user = Auth::user();
+        $bookingCount = $user->bookings()->count(); // Corrected method call
+        $discount = 0;
+
+        if ($bookingCount >= 5) {
+            $discount = $totalPrice * 0.15;
+            $totalPrice = $totalPrice - $discount;
+        }
+
+        return view('customer.bookings.confirm', compact('services', 'barber', 'bookingDate', 'bookingTime', 'totalPrice', 'discount'));
     }
 
     public function store(Request $request)
@@ -212,9 +223,21 @@ class CustomerBookingController extends Controller
         $data['barber_id'] = session('barber_id');
         $data['booking_date'] = session('booking_date');
         $data['booking_time'] = session('booking_time');
+        $data['user_id'] = Auth::id(); // Add user_id
 
         $services = Service::whereIn('id', $data['service_ids'])->get();
         $totalPrice = $services->sum('price');
+
+        // Calculate discount
+        $user = Auth::user();
+        $bookingCount = $user->bookings()->count();
+        $discount = 0;
+
+        if ($bookingCount >= 5) {
+            $discount = $totalPrice * 0.15;
+            $totalPrice = $totalPrice - $discount;
+        }
+
         $data['total_price'] = $totalPrice;
 
         $booking = Booking::create($data);

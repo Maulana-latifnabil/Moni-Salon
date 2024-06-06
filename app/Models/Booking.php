@@ -24,6 +24,11 @@ class Booking extends Model
         return $this->belongsToMany(Service::class, 'booking_service');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -38,5 +43,17 @@ class Booking extends Model
                 throw new \Exception('Waktu ini sudah terpilih untuk barber yang anda pilih');
             }
         });
+    }
+
+    public function calculateTotalWithDiscount()
+    {
+        $totalPrice = $this->services->sum('price');
+        $bookingCount = $this->user->bookings()->count();
+
+        if ($bookingCount >= 5) {
+            $totalPrice = $totalPrice * 0.85; // Apply 15% discount
+        }
+
+        return $totalPrice;
     }
 }

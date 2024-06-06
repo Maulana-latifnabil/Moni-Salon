@@ -1,4 +1,3 @@
-<!-- resources/views/customer/bookings/confirm.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -37,6 +36,9 @@
                     <li>{{ $service->name }} - Rp. {{ number_format($service->price, 0, ',', '.') }}</li>
                 @endforeach
             </ul>
+            @if(isset($discount) && $discount > 0)
+                <h4>Diskon: Rp. {{ number_format($discount, 0, ',', '.') }}</h4>
+            @endif
             <h4>Total Biaya: Rp. {{ number_format($totalPrice, 0, ',', '.') }}</h4>
         </div>
         <div class="form-group">
