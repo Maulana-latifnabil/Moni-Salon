@@ -91,11 +91,49 @@ class CustomerBookingController extends Controller
         return $pdf->stream('kwitansi_booking.pdf');
     }
 
-    public function showBooking()
+    public function showBooking(Request $request)
     {
-        $bookings = Booking::with('services', 'barber')->get();
+        $query = Booking::with('services', 'barber');
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('booking_date', [$startDate, $endDate]);
+        }
+
+        $bookings = $query->get();
+
         return view('bookings.index', compact('bookings'));
     }
+
+
+    public function editBooking($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        // Mengambil daftar status yang bisa diubah
+        $statusOptions = ['waiting', 'on-progress', 'done'];
+
+        return view('bookings.edit', compact('booking', 'statusOptions'));
+    }
+
+    public function updateBooking(Request $request, $id)
+    {
+        // Menemukan booking berdasarkan ID
+        $booking = Booking::findOrFail($id);
+
+        // Validasi input status
+        $request->validate([
+            'status' => 'required|string|in:waiting,on-progress,done',
+        ]);
+
+        // Hanya memperbarui status booking
+        $booking->status = $request->input('status');
+        $booking->save();
+
+        return redirect()->route('bookingAdmin.index')->with('success', 'Status booking berhasil diperbarui.');
+    }
+
 
 
     public function destroyBooking($id)

@@ -63,7 +63,7 @@ Route::middleware(['auth', 'role:Customer'])->group(function () {
 Route::middleware(['auth', 'role:Admin|Barber'])->group(function () {
     Route::get('bookingAdmin', [CustomerBookingController::class, 'showBooking'])->name('bookingAdmin.index');
     Route::get('bookingAdmin/{id}/edit', [CustomerBookingController::class, 'editBooking'])->name('bookingAdmin.edit');
-    Route::put('bookingAdmin/{id}', [CustomerBookingController::class, 'updateBooking'])->name('bookingAdmin.update');
+    Route::put('/bookingAdmin/{id}', [CustomerBookingController::class, 'updateBooking'])->name('bookingAdmin.update');
     Route::delete('bookingAdmin/{id}', [CustomerBookingController::class, 'destroyBooking'])->name('bookingAdmin.destroy');
 });
 

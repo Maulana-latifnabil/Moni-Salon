@@ -25,6 +25,7 @@
                             <th>Catatan Tambahan</th>
                             <th>Total Harga</th>
                             <th>Metode Pembayaran</th>
+                            <th>Status</th> <!-- Tambahkan kolom Status -->
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -46,6 +47,7 @@
                                 <td>{{ $booking->additional_notes }}</td>
                                 <td>Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</td>
                                 <td>{{ $booking->payment_method }}</td>
+                                <td>{{ ucfirst($booking->status) }}</td> <!-- Tampilkan status -->
                                 <td>
                                     <a href="{{ route('customer.bookings.edit', $booking->id) }}"
                                         class="btn btn-primary btn-sm">Edit</a>

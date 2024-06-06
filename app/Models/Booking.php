@@ -11,7 +11,7 @@ class Booking extends Model
 
     protected $fillable = [
         'full_name', 'phone_number', 'address', 'booking_date', 'booking_time',
-        'barber_id', 'additional_notes', 'payment_method'
+        'barber_id', 'additional_notes', 'payment_method', 'user_id', 'status'
     ];
 
     public function barber()
@@ -39,9 +39,9 @@ class Booking extends Model
                 ->where('booking_time', $model->booking_time)
                 ->exists();
 
-            if ($overlapBooking) {
-                throw new \Exception('Waktu ini sudah terpilih untuk barber yang anda pilih');
-            }
+            // if ($overlapBooking) {
+            //     throw new \Exception('Waktu ini sudah terpilih untuk barber yang anda pilih');
+            // }
         });
     }
 
