@@ -283,4 +283,19 @@ class CustomerBookingController extends Controller
 
         return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
     }
+
+    public function checkin($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        // Pastikan booking milik user yang sedang login dan statusnya pending
+        if ($booking->full_name == Auth::user()->name && $booking->status == 'pending') {
+            $booking->status = 'waiting';
+            $booking->save();
+
+            return redirect()->route('customer.bookings.index')->with('success', 'Check-In berhasil, status booking sekarang adalah waiting.');
+        }
+
+        return redirect()->route('customer.bookings.index')->with('error', 'Anda tidak bisa melakukan check-in pada booking ini.');
+    }
 }

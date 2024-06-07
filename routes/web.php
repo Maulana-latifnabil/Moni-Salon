@@ -43,6 +43,8 @@ Route::middleware(['auth', 'role:Customer'])->group(function () {
     Route::get('customer/bookings/{id}/receipt', [CustomerBookingController::class, 'showReceipt'])->name('customer.bookings.receipt');
     Route::get('downloadReceipt/{id}', [CustomerBookingController::class, 'downloadReceipt'])->name('downloadReceipt');
     Route::get('customer/bookings/unavailable-slots', [CustomerBookingController::class, 'getUnavailableSlots']);
+    Route::post('/bookings/{booking}/checkin', [CustomerBookingController::class, 'checkin'])->name('bookings.checkin');
+
 
     // route alur baru
     Route::get('customer/booking/step1', [CustomerBookingController::class, 'step1'])->name('customer.booking.step1');

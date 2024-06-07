@@ -38,8 +38,8 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $service->name }}</h5>
                                                 <p class="card-text">{{ $service->description }}</p>
-                                                <p class="card-text"><strong>Harga:</strong> {{ formatRupiah($service->price) }}
-                                                </p>
+                                                <p class="card-text"><strong>Harga      : </strong> {{ formatRupiah($service->price) }}</p>
+                                                <p class="card-text"><strong>Estimasi   : </strong>{{ $service->duration }} Menit</p>
                                             </div>
                                         </div>
                                     </div>

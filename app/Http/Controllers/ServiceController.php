@@ -24,16 +24,19 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'duration' => 'required|integer|min:0',
         ]);
 
         Service::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'duration' => $request->duration,
         ]);
 
         return redirect()->route('services.index')->with('success', 'Layanan berhasil dibuat.');
     }
+
 
     public function show(Service $service)
     {
@@ -51,16 +54,19 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'duration' => 'required|integer|min:0', // Validasi durasi
         ]);
 
         $service->update([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'duration' => $request->duration, // Simpan durasi
         ]);
 
         return redirect()->route('services.index')->with('success', 'Layanan berhasil diperbarui.');
     }
+
 
     public function destroy(Service $service)
     {

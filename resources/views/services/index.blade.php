@@ -25,6 +25,7 @@
                             <th>Nama</th>
                             <th>Deskripsi</th>
                             <th>Harga</th>
+                            <th>Durasi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                                 <td>{{ $service->name }}</td>
                                 <td>{{ $service->description }}</td>
                                 <td>Rp{{ number_format($service->price, 0, ',', '.') }}</td>
+                                <td>{{ $service->duration }} menit</td>
                                 <td>
                                     <a href="{{ route('services.edit', $service->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                     <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">

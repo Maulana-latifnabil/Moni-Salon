@@ -28,7 +28,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama Lengkap</th>
                             <th>Nomor Telepon</th>
                             <th>Alamat</th>
@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach ($bookings as $booking)
                             <tr>
-                                <td>{{ $booking->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->full_name }}</td>
                                 <td>{{ $booking->phone_number }}</td>
                                 <td>{{ $booking->address }}</td>

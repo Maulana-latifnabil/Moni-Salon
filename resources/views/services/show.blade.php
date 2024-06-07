@@ -1,4 +1,3 @@
-<!-- resources/views/services/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -12,6 +11,7 @@
         <div class="card-body">
             <p><strong>Deskripsi:</strong> {{ $service->description ?? 'Tidak ada deskripsi' }}</p>
             <p><strong>Harga:</strong> Rp. {{ number_format($service->price, 0, ',', '.') }}</p>
+            <p><strong>Durasi:</strong> {{ $service->duration }} menit</p>
         </div>
         <div class="card-footer">
             <a href="{{ route('services.index') }}" class="btn btn-secondary">Kembali</a>

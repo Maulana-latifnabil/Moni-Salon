@@ -13,6 +13,7 @@ class Service extends Model
         'name',
         'description',
         'price',
+        'duration',
     ];
 
     public function bookings()
@@ -20,3 +21,4 @@ class Service extends Model
         return $this->belongsToMany(Booking::class, 'booking_service');
     }
 }
+

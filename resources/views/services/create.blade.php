@@ -30,6 +30,10 @@
                     <label for="price">Harga</label>
                     <input type="number" name="price" id="price" class="form-control" step="0.01" required>
                 </div>
+                <div class="form-group">
+                    <label for="duration">Durasi (menit)</label>
+                    <input type="number" name="duration" id="duration" class="form-control" required>
+                </div>
                 <button type="submit" class="btn btn-success">Tambah Layanan</button>
             </form>
         </div>

@@ -31,6 +31,10 @@
                     <label for="price">Harga</label>
                     <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ $service->price }}" required>
                 </div>
+                <div class="form-group">
+                    <label for="duration">Durasi (menit)</label>
+                    <input type="number" name="duration" id="duration" class="form-control" value="{{ $service->duration }}" required>
+                </div>
                 <button type="submit" class="btn btn-success">Update Layanan</button>
             </form>
         </div>

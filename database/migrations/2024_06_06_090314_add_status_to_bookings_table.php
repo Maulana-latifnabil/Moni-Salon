@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
 {
     Schema::table('bookings', function (Blueprint $table) {
-        $table->string('status')->default('waiting');
+        $table->string('status')->default('pending');
     });
 }
 

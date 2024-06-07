@@ -4,7 +4,7 @@ PR :
 3. Diskon harga barber untuk pelanggan loyal dan rating untuk barber (belum fix)
 4. Buat website sederhana untuk pembayaran menggunakan API
 5. Menambahkan filter untuk hari/tanggal dan modal konfirmasi hapus(sudah)
-6. Menambahkan status booking (Pending, process, done) (Masih ngaco)
+6. Menambahkan status booking (Pending, process, done) (sudah)
 7. Menambahkan Estimasi waktu layanan
 8. Konfirmasi Check-in customer untuk kedatangan
 9. Menjumlahkan total layanan (done)
