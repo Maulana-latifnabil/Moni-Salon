@@ -219,6 +219,71 @@ class CustomerBookingController extends Controller
         return redirect()->route('customer.booking.confirm');
     }
 
+    // public function confirm()
+    // {
+    //     $serviceIds = session('service_ids', []);
+    //     $services = Service::whereIn('id', $serviceIds)->get();
+    //     $barber = User::find(session('barber_id'));
+    //     $bookingDate = session('booking_date');
+    //     $bookingTime = session('booking_time');
+
+    //     // Calculate total price
+    //     $totalPrice = $services->sum('price');
+
+    //     // Calculate discount
+    //     $user = Auth::user();
+    //     $bookingCount = $user->bookings()->count(); // Corrected method call
+    //     $discount = 0;
+
+    //     if ($bookingCount >= 5) {
+    //         $discount = $totalPrice * 0.15;
+    //         $totalPrice = $totalPrice - $discount;
+    //     }
+
+    //     return view('customer.bookings.confirm', compact('services', 'barber', 'bookingDate', 'bookingTime', 'totalPrice', 'discount'));
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'full_name' => 'required|string|max:255',
+    //         'phone_number' => 'required|string|max:15',
+    //         'address' => 'nullable|string|max:255',
+    //         'additional_notes' => 'nullable|string',
+    //         'payment_method' => 'required|string|in:cash,credit_card,online_payment',
+    //         'agree_privacy_policy' => 'required|accepted',
+    //         'agree_terms_conditions' => 'required|accepted',
+    //     ]);
+
+    //     $data = $request->all();
+    //     $data['full_name'] = Auth::user()->name;
+    //     $data['service_ids'] = session('service_ids');
+    //     $data['barber_id'] = session('barber_id');
+    //     $data['booking_date'] = session('booking_date');
+    //     $data['booking_time'] = session('booking_time');
+    //     $data['user_id'] = Auth::id(); // Add user_id
+
+    //     $services = Service::whereIn('id', $data['service_ids'])->get();
+    //     $totalPrice = $services->sum('price');
+
+    //     // Calculate discount
+    //     $user = Auth::user();
+    //     $bookingCount = $user->bookings()->count();
+    //     $discount = 0;
+
+    //     if ($bookingCount >= 5) {
+    //         $discount = $totalPrice * 0.15;
+    //         $totalPrice = $totalPrice - $discount;
+    //     }
+
+    //     $data['total_price'] = $totalPrice;
+
+    //     $booking = Booking::create($data);
+    //     $booking->services()->sync($data['service_ids']);
+
+    //     return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
+    // }
+
     public function confirm()
     {
         $serviceIds = session('service_ids', []);
@@ -227,12 +292,12 @@ class CustomerBookingController extends Controller
         $bookingDate = session('booking_date');
         $bookingTime = session('booking_time');
 
-        // Calculate total price
+        // Hitung total harga
         $totalPrice = $services->sum('price');
 
-        // Calculate discount
+        // Hitung diskon
         $user = Auth::user();
-        $bookingCount = $user->bookings()->count(); // Corrected method call
+        $bookingCount = $user->bookings()->count();
         $discount = 0;
 
         if ($bookingCount >= 5) {
@@ -255,18 +320,23 @@ class CustomerBookingController extends Controller
             'agree_terms_conditions' => 'required|accepted',
         ]);
 
+        // Periksa apakah data yang dibutuhkan ada di sesi
+        if (!session()->has(['service_ids', 'barber_id', 'booking_date', 'booking_time'])) {
+            return redirect()->route('customer.booking.step1')->with('error', 'Silakan lengkapi informasi booking terlebih dahulu.');
+        }
+
         $data = $request->all();
         $data['full_name'] = Auth::user()->name;
         $data['service_ids'] = session('service_ids');
         $data['barber_id'] = session('barber_id');
         $data['booking_date'] = session('booking_date');
         $data['booking_time'] = session('booking_time');
-        $data['user_id'] = Auth::id(); // Add user_id
+        $data['user_id'] = Auth::id(); // Menyimpan user_id
 
         $services = Service::whereIn('id', $data['service_ids'])->get();
         $totalPrice = $services->sum('price');
 
-        // Calculate discount
+        // Hitung diskon
         $user = Auth::user();
         $bookingCount = $user->bookings()->count();
         $discount = 0;
@@ -276,13 +346,16 @@ class CustomerBookingController extends Controller
             $totalPrice = $totalPrice - $discount;
         }
 
-        $data['total_price'] = $totalPrice;
+        $data['total_price'] = $totalPrice; // Menyimpan total harga yang sudah dikurangi diskon
 
+        // Simpan booking
         $booking = Booking::create($data);
         $booking->services()->sync($data['service_ids']);
 
         return redirect()->route('customer.bookings.index')->with('success', 'Booking berhasil dibuat.');
     }
+
+
 
     public function checkin($id)
     {

@@ -11,7 +11,7 @@ class Booking extends Model
 
     protected $fillable = [
         'full_name', 'phone_number', 'address', 'booking_date', 'booking_time',
-        'barber_id', 'additional_notes', 'payment_method', 'user_id', 'status'
+        'barber_id', 'additional_notes', 'payment_method', 'user_id', 'status', 'total_price'
     ];
 
     public function barber()

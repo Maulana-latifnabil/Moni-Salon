@@ -38,7 +38,8 @@
                                     @endforeach
                                 </td>
                                 <td>{{ $booking->barber ? $booking->barber->name : 'N/A' }}</td>
-                                <td>Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</td>
+                                <td>Rp. {{ number_format($booking->total_price, 0, ',', '.') }}</td>
+
                                 <td>{{ ucfirst($booking->status) }}</td>
                                 <td>
                                     <div class="d-flex flex-wrap justify-content-start">
