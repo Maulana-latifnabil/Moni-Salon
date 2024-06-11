@@ -84,7 +84,7 @@
                                         @endif
                                     </div> --}}
                                     <div class="text-center">
-                                        <a class="small" href="{{ route('register') }}">Create an Account!</a>
+                                        <a class="small" href="{{ route('register') }}">Buat Akun Anda, Jika belum punya!</a>
                                     </div>
                                 </div>
                             </div>

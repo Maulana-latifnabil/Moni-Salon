@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CustomerBookingController;
+use App\Http\Controllers\MidtransController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +58,16 @@ Route::middleware(['auth', 'role:Customer'])->group(function () {
 
     Route::get('customer/booking/confirm', [CustomerBookingController::class, 'confirm'])->name('customer.booking.confirm');
     Route::post('customer/booking/confirm', [CustomerBookingController::class, 'store'])->name('customer.booking.store');
+
+    Route::get('/customer/booking/payment', [CustomerBookingController::class, 'payment'])->name('customer.booking.payment');
+    Route::post('/customer/booking/store', [CustomerBookingController::class, 'store'])->name('customer.booking.store');
+    Route::post('/midtrans/notification', [CustomerBookingController::class, 'notificationHandler'])->name('midtrans.notification');
+    Route::get('/customer/booking/success', function () {
+        return view('customer.bookings.success');
+    })->name('customer.booking.success');
+
+    Route::post('/midtrans/transaction', [MidtransController::class, 'createTransaction'])->name('midtrans.transaction');
+    Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
 });
 
 
