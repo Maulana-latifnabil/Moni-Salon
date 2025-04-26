@@ -88,7 +88,7 @@
                                             <th>Tanggal Booking</th>
                                             <th>Waktu Booking</th>
                                             <th>Layanan</th>
-                                            <th>Barber</th>
+                                            <th>Salon</th>
                                             <th>Catatan Tambahan</th>
                                             <th>Total Biaya</th>
                                             <th>Metode Pembayaran</th>
@@ -125,7 +125,7 @@
             </div>
         @endcan
 
-        @can('katalog barber')
+        @can('katalog salon')
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Booking Hari ini</h6>

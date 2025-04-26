@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-    <h1>Booking Barbershop</h1>
+    <h1>Booking Mony Salon Beauty</h1>
     <form action="{{ route('customer.bookings.store') }}" method="POST">
         @csrf
         <div class="form-group">
@@ -75,9 +75,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="barber_id">Barber yang Dipilih</label>
+            <label for="barber_id">Salon yang Dipilih</label>
             <select name="barber_id" id="barber_id" class="form-control">
-                <option value="">Pilih Barber</option>
+                <option value="">Pilih Salon</option>
                 @foreach ($barbers as $barber)
                     <option value="{{ $barber->id }}" {{ old('barber_id') == $barber->id ? 'selected' : '' }}>
                         {{ $barber->name }}

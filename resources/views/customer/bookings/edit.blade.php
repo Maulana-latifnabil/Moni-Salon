@@ -38,9 +38,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="selected_barber">Barber yang Dipilih (opsional)</label>
+            <label for="selected_barber">Salon yang Dipilih (opsional)</label>
             <select name="selected_barber" id="selected_barber" class="form-control">
-                <option value="">Pilih Barber</option>
+                <option value="">Pilih Salon</option>
                 @foreach($barbers as $barber)
                     <option value="{{ $barber->id }}" {{ $booking->selected_barber == $barber->id ? 'selected' : '' }}>{{ $barber->name }}</option>
                 @endforeach

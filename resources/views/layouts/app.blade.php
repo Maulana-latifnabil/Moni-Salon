@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Booking Barber</title>
+    <title>Mony Salon Beauty</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -33,11 +33,12 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-cut"></i>
+                <div class="sidebar-brand-icon rotate-n-0">
+                    <img src="{{ asset('template/img/monisalon.png') }}" alt="Salon Logo" style="width: 40px; height: 40px;">
                 </div>
-                <div class="sidebar-brand-text mx-3">Booking Barber</div>
+                <div class="sidebar-brand-text mx-3">Mony Salon Beauty</div>
             </a>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -198,7 +199,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Booking Barber</span>
+                        <span>Copyright &copy; Mony Salon Beauty</span>
                     </div>
                 </div>
             </footer>

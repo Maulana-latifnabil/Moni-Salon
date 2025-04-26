@@ -91,5 +91,5 @@ Route::get('admin', function () {
 })->middleware(['auth', 'verified', 'role:Admin']);
 
 Route::get('barber', function () {
-    return '<h1>Hello Barber</h1>';
+    return '<h1>Hello Salon</h1>';
 })->middleware(['auth', 'verified', 'role:Barber|Admin']);

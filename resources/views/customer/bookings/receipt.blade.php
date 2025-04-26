@@ -22,7 +22,7 @@
                             @endforeach
                         </p>
                         <p><strong>Total Biaya Layanan</strong> Rp. {{ number_format($booking->services->sum('price'), 0, ',', '.') }}</p>
-                        <p><strong>Barber yang Dipilih:</strong> {{ $booking->barber ? $booking->barber->name : 'N/A' }}</p>
+                        <p><strong>Salon yang Dipilih:</strong> {{ $booking->barber ? $booking->barber->name : 'N/A' }}</p>
                         <p><strong>Catatan Tambahan:</strong> {{ $booking->additional_notes }}</p>
                         <p><strong>Metode Pembayaran:</strong> {{ ucfirst($booking->payment_method) }}</p>
                     </div>

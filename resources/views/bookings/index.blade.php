@@ -35,7 +35,7 @@
                             <th>Tanggal Booking</th>
                             <th>Waktu Booking</th>
                             <th>Layanan</th>
-                            <th>Barber</th>
+                            <th>Salon</th>
                             <th>Catatan Tambahan</th>
                             <th>Total Biaya</th>
                             <th>Metode Pembayaran</th>

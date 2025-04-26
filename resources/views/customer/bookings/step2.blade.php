@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h1>Pilih Barber</h1>
+    <h1>Pilih Salon</h1>
     <form action="{{ route('customer.booking.step2.post') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="barber_id">Barber yang Dipilih</label>
+            <label for="barber_id">Salon yang Dipilih</label>
             <select name="barber_id" id="barber_id" class="form-control" required>
                 @foreach ($barbers as $barber)
                     <option value="{{ $barber->id }}">{{ $barber->name }}</option>
